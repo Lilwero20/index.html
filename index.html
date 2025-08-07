@@ -14,7 +14,7 @@
             --light: #FFFFFF;
             --gray: #F1F1F1;
             --dark-gray: #888888;
-            --shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             --transition: all 0.3s ease;
         }
         
@@ -31,27 +31,28 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 15px;
         }
         
         .container {
             background: var(--light);
-            border-radius: 16px;
+            border-radius: 12px;
             box-shadow: var(--shadow);
             width: 100%;
-            max-width: 900px;
+            max-width: 500px;
             overflow: hidden;
+            margin: 20px 0;
         }
         
         .header {
             background: var(--primary);
             color: var(--light);
-            padding: 25px 30px;
+            padding: 20px;
             text-align: center;
         }
         
         .header h1 {
-            font-size: 2.2rem;
+            font-size: 1.8rem;
             margin-bottom: 5px;
             display: flex;
             align-items: center;
@@ -62,25 +63,26 @@
         .header p {
             opacity: 0.9;
             font-weight: 300;
+            font-size: 0.95rem;
         }
         
         .content {
-            padding: 30px;
+            padding: 20px;
         }
         
         .input-group {
             display: flex;
-            margin-bottom: 25px;
-            border-radius: 10px;
+            margin-bottom: 20px;
+            border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
         
         #url {
             flex: 1;
-            padding: 18px;
+            padding: 14px;
             border: none;
-            font-size: 16px;
+            font-size: 15px;
             outline: none;
             background: var(--gray);
             color: var(--secondary);
@@ -88,15 +90,16 @@
         
         #url::placeholder {
             color: var(--dark-gray);
+            font-size: 15px;
         }
         
         #submit {
             background: var(--secondary);
             color: var(--light);
             border: none;
-            padding: 0 30px;
+            padding: 0 20px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 500;
             transition: var(--transition);
             display: flex;
@@ -110,7 +113,7 @@
         
         .video-display {
             display: none;
-            margin-top: 30px;
+            margin-top: 25px;
             animation: fadeIn 0.5s ease;
         }
         
@@ -121,52 +124,53 @@
         
         .video-thumbnail {
             width: 100%;
-            border-radius: 12px;
+            border-radius: 10px;
             box-shadow: var(--shadow);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             aspect-ratio: 16/9;
             object-fit: cover;
             background: var(--gray);
         }
         
         .video-info {
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
         
         .video-title {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             color: var(--secondary);
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             font-weight: 600;
+            line-height: 1.4;
         }
         
         .video-meta {
             display: flex;
-            gap: 15px;
+            gap: 12px;
             color: var(--dark-gray);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
         
         .download-options {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 25px;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
         }
         
         .download-option {
             background: var(--light);
             border: 2px solid var(--gray);
-            border-radius: 10px;
-            padding: 20px;
+            border-radius: 8px;
+            padding: 16px;
             cursor: pointer;
             transition: var(--transition);
             text-align: center;
         }
         
         .download-option:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(255, 0, 0, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.1);
             border-color: var(--primary-light);
         }
         
@@ -176,43 +180,43 @@
         }
         
         .download-option i {
-            font-size: 30px;
+            font-size: 26px;
             color: var(--primary);
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
         
         .download-option h3 {
             color: var(--secondary);
-            margin-bottom: 5px;
-            font-size: 1.1rem;
+            margin-bottom: 4px;
+            font-size: 1rem;
         }
         
         .download-option p {
             color: var(--dark-gray);
-            font-size: 0.85rem;
+            font-size: 0.8rem;
         }
         
         .download-btn {
             background: var(--primary);
             color: var(--light);
             border: none;
-            padding: 16px;
-            border-radius: 10px;
+            padding: 14px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
             width: 100%;
             transition: var(--transition);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
         }
         
         .download-btn:hover {
             background: var(--primary-light);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.2);
+            box-shadow: 0 4px 12px rgba(255, 0, 0, 0.2);
         }
         
         .download-btn:disabled {
@@ -225,17 +229,17 @@
         .loading {
             display: none;
             text-align: center;
-            padding: 30px;
+            padding: 25px;
         }
         
         .spinner {
-            border: 4px solid rgba(255, 255, 255, 0.3);
+            border: 3px solid rgba(255, 255, 255, 0.3);
             border-radius: 50%;
-            border-top: 4px solid var(--primary);
-            width: 40px;
-            height: 40px;
+            border-top: 3px solid var(--primary);
+            width: 30px;
+            height: 30px;
             animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
+            margin: 0 auto 15px;
         }
         
         @keyframes spin {
@@ -246,34 +250,35 @@
         .error {
             color: var(--primary);
             background: rgba(255, 0, 0, 0.1);
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 15px;
             display: none;
             text-align: center;
             animation: shake 0.5s;
+            font-size: 0.9rem;
         }
         
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
-            20%, 60% { transform: translateX(-5px); }
-            40%, 80% { transform: translateX(5px); }
+            20%, 60% { transform: translateX(-3px); }
+            40%, 80% { transform: translateX(3px); }
         }
         
         .service-selector {
-            margin: 20px 0;
+            margin: 15px 0;
             text-align: center;
         }
         
         .service-btn {
             background: var(--gray);
             border: none;
-            padding: 8px 15px;
-            border-radius: 20px;
-            margin: 0 5px;
+            padding: 6px 12px;
+            border-radius: 15px;
+            margin: 0 4px;
             cursor: pointer;
             transition: var(--transition);
-            font-size: 0.8rem;
+            font-size: 0.75rem;
         }
         
         .service-btn.active {
@@ -283,40 +288,56 @@
         
         footer {
             text-align: center;
-            padding: 20px;
+            padding: 15px;
             color: var(--dark-gray);
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             border-top: 1px solid var(--gray);
         }
         
-        @media (max-width: 768px) {
+        @media (min-width: 768px) {
             .container {
-                border-radius: 0;
+                max-width: 600px;
+                border-radius: 16px;
             }
             
             .header {
-                padding: 20px;
+                padding: 25px;
             }
             
             .header h1 {
-                font-size: 1.8rem;
+                font-size: 2rem;
             }
             
             .content {
-                padding: 20px;
+                padding: 25px;
             }
             
-            .input-group {
-                flex-direction: column;
+            #url {
+                padding: 16px;
+                font-size: 16px;
             }
             
             #submit {
-                padding: 15px;
-                justify-content: center;
+                padding: 0 25px;
+                font-size: 16px;
             }
             
             .download-options {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            
+            .video-title {
+                font-size: 1.3rem;
+            }
+            
+            .download-option {
+                padding: 18px;
+            }
+            
+            .download-btn {
+                padding: 15px;
+                font-size: 16px;
             }
         }
     </style>
@@ -358,7 +379,7 @@
                     <button class="service-btn" data-service="onlinevideoconverter">OnlineConverter</button>
                 </div>
                 
-                <h3 style="margin-bottom: 15px; color: var(--secondary);">Selecciona formato:</h3>
+                <h3 style="margin-bottom: 12px; color: var(--secondary); font-size: 1.1rem;">Selecciona formato:</h3>
                 <div class="download-options">
                     <div class="download-option" data-format="mp4">
                         <i class="fas fa-film"></i>
@@ -379,7 +400,7 @@
         </div>
         
         <footer>
-            <p>Este servicio esta en BETA por lo que puede contener errores a la hora de descargar mp4 o mp3, By: WeroScripts</p>
+            <p>Este servicio es para uso personal. Respeta los derechos de autor.</p>
         </footer>
     </div>
 
