@@ -3,17 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Descargador de YouTube</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Descargador Premium de YouTube</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* (Mantén los mismos estilos CSS del código anterior) */
         :root {
-            --primary: #ff4d4d;
-            --secondary: #ff7675;
-            --dark: #333;
-            --light: #f9f9f9;
-            --gray: #ddd;
+            --primary: #FF0000;
+            --primary-light: #FF3333;
+            --secondary: #282828;
+            --light: #FFFFFF;
+            --gray: #F1F1F1;
+            --dark-gray: #888888;
+            --shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
         }
         
         * {
@@ -24,7 +26,7 @@
         }
         
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -33,93 +35,418 @@
         }
         
         .container {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            background: var(--light);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
             width: 100%;
-            max-width: 800px;
-            padding: 30px;
+            max-width: 900px;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: var(--primary);
+            color: var(--light);
+            padding: 25px 30px;
             text-align: center;
         }
         
-        /* ... (mantén todo el CSS anterior igual) ... */
+        .header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .input-group {
+            display: flex;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        #url {
+            flex: 1;
+            padding: 18px;
+            border: none;
+            font-size: 16px;
+            outline: none;
+            background: var(--gray);
+            color: var(--secondary);
+        }
+        
+        #url::placeholder {
+            color: var(--dark-gray);
+        }
+        
+        #submit {
+            background: var(--secondary);
+            color: var(--light);
+            border: none;
+            padding: 0 30px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        #submit:hover {
+            background: #111;
+        }
+        
+        .video-display {
+            display: none;
+            margin-top: 30px;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .video-thumbnail {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            background: var(--gray);
+        }
+        
+        .video-info {
+            margin-bottom: 30px;
+        }
+        
+        .video-title {
+            font-size: 1.4rem;
+            color: var(--secondary);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .video-meta {
+            display: flex;
+            gap: 15px;
+            color: var(--dark-gray);
+            font-size: 0.95rem;
+        }
+        
+        .download-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .download-option {
+            background: var(--light);
+            border: 2px solid var(--gray);
+            border-radius: 10px;
+            padding: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+        
+        .download-option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(255, 0, 0, 0.1);
+            border-color: var(--primary-light);
+        }
+        
+        .download-option.selected {
+            border-color: var(--primary);
+            background: rgba(255, 0, 0, 0.03);
+        }
+        
+        .download-option i {
+            font-size: 30px;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+        
+        .download-option h3 {
+            color: var(--secondary);
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+        
+        .download-option p {
+            color: var(--dark-gray);
+            font-size: 0.85rem;
+        }
+        
+        .download-btn {
+            background: var(--primary);
+            color: var(--light);
+            border: none;
+            padding: 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .download-btn:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.2);
+        }
+        
+        .download-btn:disabled {
+            background: var(--dark-gray);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid var(--primary);
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error {
+            color: var(--primary);
+            background: rgba(255, 0, 0, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+            text-align: center;
+            animation: shake 0.5s;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-5px); }
+            40%, 80% { transform: translateX(5px); }
+        }
+        
+        .service-selector {
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .service-btn {
+            background: var(--gray);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.8rem;
+        }
+        
+        .service-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--dark-gray);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--gray);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                border-radius: 0;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .input-group {
+                flex-direction: column;
+            }
+            
+            #submit {
+                padding: 15px;
+                justify-content: center;
+            }
+            
+            .download-options {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1><i class="fas fa-download"></i> Descargador de YouTube</h1>
-        <p class="description">Pega el enlace de cualquier video de YouTube y descárgalo en tu formato preferido.</p>
-        
-        <div class="input-group">
-            <input type="text" id="url" placeholder="https://www.youtube.com/watch?v=..." required>
-            <button id="submit"><i class="fas fa-search"></i> Buscar</button>
+        <div class="header">
+            <h1><i class="fab fa-youtube"></i> YouTube Downloader</h1>
+            <p>Descarga videos y audio en alta calidad</p>
         </div>
         
-        <div class="error" id="error-message"></div>
-        
-        <div class="loading" id="loading">
-            <div class="spinner"></div>
-            <p>Procesando video...</p>
-        </div>
-        
-        <div class="video-info" id="video-info">
-            <img src="" alt="Miniatura del video" class="thumbnail" id="thumbnail">
-            <h3 class="video-title" id="video-title"></h3>
-            <p class="video-duration" id="video-duration"></p>
-        </div>
-        
-        <div class="options" id="options">
-            <h2>Selecciona el formato de descarga:</h2>
-            <div class="format-options" id="format-options">
-                <div class="format-option" data-format="mp4">
-                    <i class="fas fa-film"></i>
-                    <h3>Video MP4 (HD)</h3>
-                    <p>Mejor calidad disponible</p>
-                </div>
-                <div class="format-option" data-format="mp3">
-                    <i class="fas fa-music"></i>
-                    <h3>Solo Audio MP3</h3>
-                    <p>Calidad de audio 128kbps</p>
-                </div>
+        <div class="content">
+            <div class="input-group">
+                <input type="text" id="url" placeholder="Pega aquí el enlace de YouTube..." required>
+                <button id="submit"><i class="fas fa-search"></i> Analizar</button>
             </div>
-            <button class="download-btn" id="download-btn"><i class="fas fa-download"></i> Descargar</button>
+            
+            <div class="error" id="error-message"></div>
+            
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Obteniendo información del video...</p>
+            </div>
+            
+            <div class="video-display" id="video-display">
+                <img src="" alt="Miniatura del video" class="video-thumbnail" id="thumbnail">
+                <div class="video-info">
+                    <h2 class="video-title" id="video-title"></h2>
+                    <div class="video-meta">
+                        <span id="video-duration"><i class="far fa-clock"></i> <span id="duration-text">--:--</span></span>
+                        <span id="video-views"><i class="far fa-eye"></i> <span id="views-text">--- vistas</span></span>
+                    </div>
+                </div>
+                
+                <div class="service-selector">
+                    <small>Método de descarga:</small>
+                    <button class="service-btn active" data-service="yt1s">YT1S</button>
+                    <button class="service-btn" data-service="savefrom">SaveFrom</button>
+                    <button class="service-btn" data-service="onlinevideoconverter">OnlineConverter</button>
+                </div>
+                
+                <h3 style="margin-bottom: 15px; color: var(--secondary);">Selecciona formato:</h3>
+                <div class="download-options">
+                    <div class="download-option" data-format="mp4">
+                        <i class="fas fa-film"></i>
+                        <h3>Video MP4</h3>
+                        <p>Calidad HD 1080p</p>
+                    </div>
+                    <div class="download-option" data-format="mp3">
+                        <i class="fas fa-music"></i>
+                        <h3>Audio MP3</h3>
+                        <p>Alta calidad 320kbps</p>
+                    </div>
+                </div>
+                
+                <button class="download-btn" id="download-btn" disabled>
+                    <i class="fas fa-download"></i> Descargar ahora
+                </button>
+            </div>
         </div>
         
         <footer>
-            <p>Este servicio es para uso personal solamente. Por favor no infrinjas los derechos de autor.</p>
+            <p>Este servicio es para uso personal. Respeta los derechos de autor.</p>
         </footer>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Elementos del DOM
             const urlInput = document.getElementById('url');
             const submitBtn = document.getElementById('submit');
-            const optionsSection = document.getElementById('options');
+            const videoDisplay = document.getElementById('video-display');
             const loadingSection = document.getElementById('loading');
-            const videoInfoSection = document.getElementById('video-info');
-            const formatOptions = document.querySelectorAll('.format-option');
-            const downloadBtn = document.getElementById('download-btn');
             const thumbnail = document.getElementById('thumbnail');
             const videoTitle = document.getElementById('video-title');
-            const videoDuration = document.getElementById('video-duration');
+            const durationText = document.getElementById('duration-text');
+            const viewsText = document.getElementById('views-text');
+            const downloadOptions = document.querySelectorAll('.download-option');
+            const downloadBtn = document.getElementById('download-btn');
             const errorMessage = document.getElementById('error-message');
+            const serviceBtns = document.querySelectorAll('.service-btn');
             
-            let selectedFormat = '';
+            // Variables de estado
             let currentVideoId = '';
+            let selectedFormat = '';
+            let selectedService = 'yt1s';
             
-            // Servicios alternativos para descarga
-            const SERVICES = [
-                {
-                    name: 'Youtube Video Download',
-                    url: (id, format) => `https://yt1s.com/api/ajaxSearch?id=${id}&q=${format === 'mp3' ? 'mp3' : 'mp4'}`
+            // Servicios de descarga
+            const SERVICES = {
+                yt1s: {
+                    name: 'YT1S',
+                    url: (id, format) => `https://yt1s.com/api/ajaxSearch?id=${id}&q=${format}`
                 },
-                {
+                savefrom: {
+                    name: 'SaveFrom',
+                    url: (id, format) => `https://en.savefrom.net/#url=https://www.youtube.com/watch?v=${id}`
+                },
+                onlinevideoconverter: {
                     name: 'OnlineVideoConverter',
                     url: (id, format) => `https://onlinevideoconverter.pro/api/button/${format === 'mp3' ? 'mp3' : 'videos'}?url=https://www.youtube.com/watch?v=${id}`
                 }
-            ];
+            };
             
-            submitBtn.addEventListener('click', async function() {
+            // Event listeners
+            submitBtn.addEventListener('click', processVideoUrl);
+            urlInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') processVideoUrl();
+            });
+            
+            downloadOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    downloadOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    selectedFormat = this.getAttribute('data-format');
+                    downloadBtn.disabled = false;
+                });
+            });
+            
+            serviceBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    serviceBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    selectedService = this.getAttribute('data-service');
+                });
+            });
+            
+            downloadBtn.addEventListener('click', downloadMedia);
+            
+            // Funciones principales
+            async function processVideoUrl() {
                 const youtubeUrl = urlInput.value.trim();
                 
                 if (!youtubeUrl) {
@@ -128,129 +455,126 @@
                 }
                 
                 if (!isValidYouTubeUrl(youtubeUrl)) {
-                    showError('Por favor ingresa una URL válida de YouTube');
+                    showError('URL de YouTube no válida');
                     return;
                 }
                 
                 try {
+                    // Mostrar carga y ocultar otros elementos
                     loadingSection.style.display = 'block';
-                    optionsSection.style.display = 'none';
-                    videoInfoSection.style.display = 'none';
+                    videoDisplay.style.display = 'none';
                     hideError();
                     
+                    // Extraer ID del video
                     currentVideoId = extractVideoId(youtubeUrl);
                     if (!currentVideoId) {
                         showError('No se pudo extraer el ID del video');
                         return;
                     }
                     
-                    // Usamos la API de YouTube para obtener información (solo frontend)
-                    const videoInfo = await getVideoInfoFrontend(currentVideoId);
+                    // Obtener información del video
+                    const videoInfo = await getVideoInfo(currentVideoId);
                     
-                    if (!videoInfo) {
-                        showError('No se pudo obtener información del video');
-                        return;
-                    }
+                    // Mostrar información del video
+                    displayVideoInfo(videoInfo);
                     
-                    videoTitle.textContent = videoInfo.title || 'Título no disponible';
-                    videoDuration.textContent = videoInfo.duration ? `Duración: ${videoInfo.duration}` : '';
-                    thumbnail.src = `https://img.youtube.com/vi/${currentVideoId}/maxresdefault.jpg`;
-                    thumbnail.onerror = function() {
-                        this.src = `https://img.youtube.com/vi/${currentVideoId}/hqdefault.jpg`;
-                    };
-                    
+                    // Mostrar sección de video
                     loadingSection.style.display = 'none';
-                    optionsSection.style.display = 'block';
-                    videoInfoSection.style.display = 'block';
+                    videoDisplay.style.display = 'block';
                     
                 } catch (error) {
                     console.error('Error:', error);
                     showError('Error al procesar el video. Intenta nuevamente.');
                     loadingSection.style.display = 'none';
                 }
-            });
+            }
             
-            formatOptions.forEach(option => {
-                option.addEventListener('click', function() {
-                    formatOptions.forEach(opt => opt.classList.remove('selected'));
-                    this.classList.add('selected');
-                    selectedFormat = this.getAttribute('data-format');
-                });
-            });
+            function displayVideoInfo(info) {
+                videoTitle.textContent = info.title || 'Video de YouTube';
+                durationText.textContent = info.duration || '--:--';
+                viewsText.textContent = info.views ? `${info.views} vistas` : '--- vistas';
+                
+                // Cargar miniatura
+                thumbnail.src = `https://img.youtube.com/vi/${currentVideoId}/maxresdefault.jpg`;
+                thumbnail.onerror = function() {
+                    this.src = `https://img.youtube.com/vi/${currentVideoId}/hqdefault.jpg`;
+                };
+            }
             
-            downloadBtn.addEventListener('click', async function() {
+            function downloadMedia() {
                 if (!selectedFormat) {
-                    showError('Por favor selecciona un formato de descarga');
+                    showError('Por favor selecciona un formato');
                     return;
                 }
                 
                 if (!currentVideoId) {
-                    showError('URL no válida');
+                    showError('No se ha cargado un video válido');
                     return;
                 }
                 
                 try {
+                    // Cambiar estado del botón
                     downloadBtn.disabled = true;
                     downloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Preparando descarga...';
                     
-                    // Intentamos con cada servicio hasta que uno funcione
-                    for (const service of SERVICES) {
-                        try {
-                            const serviceUrl = service.url(currentVideoId, selectedFormat);
-                            window.open(serviceUrl, '_blank');
-                            downloadBtn.innerHTML = '<i class="fas fa-download"></i> Descargar';
-                            downloadBtn.disabled = false;
-                            return;
-                        } catch (e) {
-                            console.log(`Servicio ${service.name} falló, intentando con el siguiente`);
-                            continue;
-                        }
-                    }
+                    // Obtener URL de descarga del servicio seleccionado
+                    const service = SERVICES[selectedService];
+                    const downloadUrl = service.url(currentVideoId, selectedFormat);
                     
-                    showError('Todos los servicios están ocupados. Intenta más tarde.');
+                    // Abrir en nueva pestaña
+                    window.open(downloadUrl, '_blank');
                     
                 } catch (error) {
                     console.error('Error al descargar:', error);
                     showError('Error al preparar la descarga');
                 } finally {
-                    downloadBtn.disabled = false;
-                    downloadBtn.innerHTML = '<i class="fas fa-download"></i> Descargar';
+                    // Restaurar botón después de 2 segundos
+                    setTimeout(() => {
+                        downloadBtn.disabled = false;
+                        downloadBtn.innerHTML = '<i class="fas fa-download"></i> Descargar ahora';
+                    }, 2000);
                 }
-            });
+            }
             
             // Funciones auxiliares
-            function isValidYouTubeUrl(url) {
-                const pattern = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+/;
-                return pattern.test(url);
-            }
-            
-            function extractVideoId(url) {
-                const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-                const match = url.match(regExp);
-                return (match && match[2].length === 11) ? match[2] : null;
-            }
-            
-            async function getVideoInfoFrontend(videoId) {
-                // Solución frontend para obtener información básica
+            async function getVideoInfo(videoId) {
+                // Intenta obtener información de la API de YouTube embebida
                 try {
-                    // Intenta obtener información de la API de YouTube embebida
-                    const response = await fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`);
+                    const response = await fetch(`https://noembed.com/embed?url=https://www.youtube.com/watch?v=${videoId}`);
                     if (response.ok) {
                         const data = await response.json();
                         return {
                             title: data.title,
-                            duration: '' // No disponible en esta API
+                            duration: '', // Esta API no proporciona duración
+                            views: '' // Ni vistas
                         };
                     }
                 } catch (e) {
                     console.log('No se pudo obtener información detallada');
                 }
                 
-                // Si falla, devolvemos información mínima
+                // Si falla, devolver información mínima
                 return {
                     title: `Video ID: ${videoId}`,
-                    duration: ''
+                    duration: '',
+                    views: ''
                 };
+            }
+            
+            function isValidYouTubeUrl(url) {
+                const patterns = [
+                    /^(https?:\/\/)?(www\.)?youtube\.com\/watch\?v=([^&]+)/,
+                    /^(https?:\/\/)?(www\.)?youtu\.be\/([^&]+)/,
+                    /^(https?:\/\/)?(www\.)?youtube\.com\/embed\/([^&]+)/,
+                    /^(https?:\/\/)?(www\.)?youtube\.com\/v\/([^&]+)/
+                ];
+                return patterns.some(pattern => pattern.test(url));
+            }
+            
+            function extractVideoId(url) {
+                const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+                const match = url.match(regExp);
+                return (match && match[2].length === 11) ? match[2] : null;
             }
             
             function showError(message) {
